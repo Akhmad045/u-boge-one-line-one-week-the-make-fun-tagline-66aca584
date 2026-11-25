@@ -74,6 +74,12 @@ def main(argv):
     out = Path("/output/entry.txt")
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(TAGLINE, encoding="utf-8")
+    # Read back what was written: the graded file must be exactly the line.
+    if out.read_text(encoding="utf-8") != TAGLINE:
+        print("written entry does not match the tagline", file=sys.stderr)
+        return 1
+    print("wrote %s (%d chars / %d bytes)"
+          % (out, len(TAGLINE), len(TAGLINE.encode("utf-8"))))
     return 0
 
 
